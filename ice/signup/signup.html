@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Feed Sign Up</title>
+
+   
+<style>
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: rgb(120, 96, 64);
+    font-family: Georgia, serif;
+    padding-top: 10px;
+}
+
+#formContainer {
+    width: 430px;
+    margin: 0 auto;
+    background: white;
+    border: 8px solid #0b2d89;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
+}
+
+#formContainer::before {
+    content: "";
+    display: block;
+    height: 190px;
+    background-image: url("images/jesus_feeds_5000.jpeg");
+    background-size: cover;
+    background-position: center top;
+}
+
+h3 {
+    text-align: center;
+    padding: 15px;
+    background: white;
+    font-size: 18px;
+}
+
+#myForm {
+    background: white;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 18px;
+}
+
+#closeBtn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    z-index: 10;
+}
+
+label {
+    font-size: 16px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 160px;
+}
+
+section {
+    grid-column: 1 / 3;
+    text-align: center;
+}
+
+button[type="submit"] {
+    padding: 4px 12px;
+}
+
+#output {
+    width: 430px;
+    margin: 20px auto;
+    background: white;
+    padding: 10px;
+}
+
+#formContainer::after {
+    content: "Daily Feed\A Scripture a Day";
+    white-space: pre;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 1.1;
+    text-shadow: 3px 3px 6px black;
+    pointer-events: none;
+}
+</style>
+
+
+</head>
+
+<body>
+    <div id="formContainer">
+        <h3>Sign Up for Daily Scripture Feed</h3>
+        <form id="myForm">
+            <button type="button" id="closeBtn">X</button>
+            <label for="username">User Name:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label>Gender:</label>
+            <div>
+                <input type="radio" id="male" name="gender" value="male" required>
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="female" required>
+                <label for="female">Female</label>
+            </div>
+
+            <section>
+                <input type="checkbox" id="newsletter" name="newsletter">
+                <label for="newsletter">Subscribe to newsletter</label>
+            </section>
+
+            <section>
+                <input type="checkbox" id="conditions" name="conditions" required>
+                <label for="conditions">I acknowledge the terms and conditions</label>
+            </section>
+
+            <section>
+                <button type="submit">Submit</button>
+            </section>
+        </form>
+    </div>
+
+    <div id="output"></div>
+
+    <script>
+        // Here is some Javascript to start looking forward to wdd131
+        document.getElementById("closeBtn").addEventListener("click", function () {
+            document.getElementById("formContainer").style.display = "none";
+         });
+        const form = document.getElementById('myForm');
+        const output = document.getElementById('output');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Stop form from actually submitting
+
+            const formData = new FormData(form);
+            const entries = [];
+
+            for (const [key, value] of formData.entries()) {
+                if (key == "password") {
+                    entries.push(`<strong>${key}</strong>: ${value} (you should probably encrypt the password)`);
+                } else {
+                    entries.push(`<strong>${key}</strong>: ${value}`);
+                }
+            }
+
+            output.innerHTML = `
+            <br>  
+            <h3>Here is the data that would be sent to the server:</h3>
+            <ul>
+                ${entries.map(item => `<li>${item}</li>`).join('')}
+            </ul>
+            `;
+                });
+    </script>
+
+</body>
+
+</html>
